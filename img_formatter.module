@@ -10,12 +10,18 @@
  * Implements hook_field_formatter_info().
  */
 function img_formatter_field_formatter_info() {
-  return array(
-    'img_formatter' => array(
+  $formatters = array(
+    'img_formatter_style' => array(
       'label' => t('Gallery Image Formatter'),
       'field types' => array('image'),
+      'settings' => array(
+        'image_style' => '',
+        'image_link' => ''
+      ),
     ),
   );
+
+  return $formatters;
 }
 
 /**
@@ -23,12 +29,86 @@ function img_formatter_field_formatter_info() {
  */
 function img_formatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-  $settings = $display['settings'];
 
-  if ($display['type'] == 'img_formatter') {
-    foreach ($items as $delta => $item) {
-      $element[$delta] = array('#markup' => $item['value']);
+  // // Check if the formatter involves a link.
+  // if ($display['settings']['image_link'] == 'content') {
+  //   $uri = entity_uri($entity_type, $entity);
+  // }
+  // elseif ($display['settings']['image_link'] == 'file') {
+  //   $link_file = TRUE;
+  // }
+
+  foreach ($items as $delta => $item) {
+    if (isset($link_file)) {
+      $uri = array(
+        'path' => file_create_url($item['uri']),
+        'options' => array(),
+      );
     }
+    $element[$delta] = array(
+      '#theme' => 'img_formatter',
+      '#item' => $item,
+      '#image_style' => $display['settings']['image_style'],
+      '#path' => isset($uri) ? $uri : '',
+    );
   }
+
   return $element;
+}
+
+/**
+ * Returns HTML for an image field formatter.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: Associative array of image data, which may include "uri", "alt",
+ *     "width", "height", "title" and "attributes".
+ *   - image_style: An optional image style.
+ *   - path: An array containing the link 'path' and link 'options'.
+ *
+ * @ingroup themeable
+ */
+function theme_img_formatter($variables) {
+  $item = $variables['item'];
+  $image = array(
+    'path' => $item['uri'],
+  );
+
+  if (array_key_exists('alt', $item)) {
+    $image['alt'] = $item['alt'];
+  }
+
+  if (isset($item['attributes'])) {
+    $image['attributes'] = $item['attributes'];
+  }
+
+  if (isset($item['width']) && isset($item['height'])) {
+    $image['width'] = $item['width'];
+    $image['height'] = $item['height'];
+  }
+
+  // Do not output an empty 'title' attribute.
+  if (isset($item['title']) && drupal_strlen($item['title']) > 0) {
+    $image['title'] = $item['title'];
+  }
+
+  if ($variables['image_style']) {
+    $image['style_name'] = $variables['image_style'];
+    $output = theme('image_style', $image);
+  }
+  else {
+    $output = theme('image', $image);
+  }
+
+  // The link path and link options are both optional, but for the options to be
+  // processed, the link path must at least be an empty string.
+  if (isset($variables['path']['path'])) {
+    $path = $variables['path']['path'];
+    $options = isset($variables['path']['options']) ? $variables['path']['options'] : array();
+    // When displaying an image inside a link, the html option must be TRUE.
+    $options['html'] = TRUE;
+    $output = l($output, $path, $options);
+  }
+
+  return $output;
 }
