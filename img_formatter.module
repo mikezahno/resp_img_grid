@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * adds a formatter for gallery image fields
+ * See: http://jsbin.com/utupuw/5/edit
+ *
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function img_formatter_field_formatter_info() {
+  return array(
+    'img_formatter' => array(
+      'label' => t('Gallery Image Formatter'),
+      'field types' => array('image'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function img_formatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $settings = $display['settings'];
+
+  if ($display['type'] == 'img_formatter') {
+    foreach ($items as $delta => $item) {
+      $element[$delta] = array('#markup' => $item['value']);
+    }
+  }
+  return $element;
+}

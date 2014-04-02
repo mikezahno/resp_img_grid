@@ -1,0 +1,4 @@
+core        = 7.x
+name        = Image Formatter
+description = "Add a gallery formatter to images"
+package     = Fields
