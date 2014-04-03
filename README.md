@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-Field Formatter for Gallery Thumbnails
-==========
+#Responsive-Image-Grid-Formatter
 
-Drupal 7.x Module
-=======
-Responsive-Image-Grid-Formatter
-===============================
+####Drupal 7.x Module
 
-Responsive Image Grid Formatter
->>>>>>> 2b2a2dbc168e4be6823de20825a65c017c1abc09
+### Features
+* Format any image with responsive markup
+* Touch-Friendly
+
+Markup as of: [http://jsbin.com/fihuj/3/edit](http://jsbin.com/fihuj/3/edit)
