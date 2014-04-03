@@ -31,7 +31,6 @@ function resp_img_grid_field_formatter_info() {
       ),
     ),
   );
-
   return $formatters;
 }
 
@@ -63,8 +62,6 @@ function resp_img_grid_field_formatter_settings_summary($field, $instance, $view
   }
   return implode('<br />', $summary);
 }
-
-
 
 /**
  * Implements hook_field_formatter_view().
