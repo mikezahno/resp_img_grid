@@ -1,5 +1,45 @@
 <?php
 
+
+/**
+ * Implements hook_libraries_info().
+ */
+function resp_img_grid_libraries_info() {
+  $libraries['color-thief'] = array(
+    'name' => 'color-thief',
+    'vendor url' => 'http://lokeshdhakar.com/projects/color-thief',
+    'download url' => 'https://github.com/lokesh/color-thief/archive/v2.0.zip',
+    'version arguments' => array(
+      'file' => 'color-thief.js',
+      'pattern' => '@(?i:Color Thief) v([0-9\.a-z]+)@',
+      'lines' => 5,
+    ),
+    'files' => array(
+      'js' => array(
+        'color-thief.js',
+      ),
+    ),
+    'variants' => array(
+      // 'minified' => array(
+      //   'files' => array(
+      //     'js' => array(
+      //       'color-thief.js',
+      //     ),
+      //   ),
+      // ),
+      'source' => array(
+        'files' => array(
+          'js' => array(
+            'color-thief.js',
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
 /**
  * Implements hook_init().
  * Add js and css to the page
@@ -7,6 +47,8 @@
 function resp_img_grid_init() {
   drupal_add_css(drupal_get_path('module', 'resp_img_grid') . '/css/resp_img_grid.css'); 
   drupal_add_js(drupal_get_path('module', 'resp_img_grid') . '/js/resp_img_grid.js');
+  
+  libraries_load('color-thief');
 }
 
 /**
