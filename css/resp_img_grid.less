@@ -10,6 +10,15 @@
   position: relative;
   width: 20%;
   padding-bottom: 20%;
+  &:last-of-type {
+    clear: right;
+    &:after {
+      position: relative;
+      content: " ";
+      display: table;
+      clear: right;
+    }
+  }
 }
 .boxInner {
   position: absolute;

@@ -4,6 +4,15 @@
   width: 20%;
   padding-bottom: 20%;
 }
+.box:last-of-type {
+  clear: right;
+}
+.box:last-of-type:after {
+  position: relative;
+  content: " ";
+  display: table;
+  clear: right;
+}
 .boxInner {
   position: absolute;
   left: 0px;
@@ -66,4 +75,4 @@ body.touch .boxInner.touchFocus .titleBox {
     padding-bottom: 25%;
   }
 }
-/*# sourceMappingURL=img_for.css.map */
+/*# sourceMappingURL=resp_img_grid.css.map */

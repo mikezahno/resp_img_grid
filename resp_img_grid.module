@@ -6,7 +6,7 @@
  */
 function resp_img_grid_init() {
   drupal_add_css(drupal_get_path('module', 'resp_img_grid') . '/css/resp_img_grid.css'); 
-  drupal_add_js(drupal_get_path('module', 'resp_img_grid') .'/js/resp_img_grid.js');
+  drupal_add_js(drupal_get_path('module', 'resp_img_grid') . '/js/resp_img_grid.js');
 }
 
 /**
